@@ -1,0 +1,247 @@
+{
+  "info": {
+    "name": "Contacts API",
+    "description": "REST API for managing contacts",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Get All Contacts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"]
+        },
+        "description": "Returns all contacts with status 200"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Contact By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw"]
+        },
+        "description": "Returns contact object with status 200 if found, or {\"message\": \"Not found\"} with status 404 if not found"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Contact By ID (Not Found)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/invalid-id-12345",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "invalid-id-12345"]
+        },
+        "description": "Test case for non-existent contact ID - should return 404"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Contact",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"(123) 456-7890\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"]
+        },
+        "description": "Creates a new contact with all required fields (name, email, phone). Returns created contact with status 201"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Contact (Missing Field)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"]
+        },
+        "description": "Test validation - missing 'phone' field. Should return {\"message\": error.message} with status 400"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Contact (Invalid Email)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"not-an-email\",\n  \"phone\": \"(123) 456-7890\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"]
+        },
+        "description": "Test validation - invalid email format. Should return {\"message\": error.message} with status 400"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Contact",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Name\",\n  \"phone\": \"(999) 888-7777\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw"]
+        },
+        "description": "Updates contact with any combination of fields (name, email, phone). Returns updated contact with status 200"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Contact (Empty Body)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw"]
+        },
+        "description": "Test validation - empty body. Should return {\"message\": \"Body must have at least one field\"} with status 400"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Contact (Invalid Email)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"invalid-email\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw"]
+        },
+        "description": "Test validation - invalid email format. Should return {\"message\": error.message} with status 400"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Contact (Not Found)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Name\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/invalid-id-12345",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "invalid-id-12345"]
+        },
+        "description": "Test case for non-existent contact ID - should return {\"message\": \"Not found\"} with status 404"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Contact",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/C9sjBfCo4UJCWjzBnOtxl",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "C9sjBfCo4UJCWjzBnOtxl"]
+        },
+        "description": "Deletes contact by ID. Returns deleted contact object with status 200 if found, or {\"message\": \"Not found\"} with status 404 if not found"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Contact (Not Found)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/invalid-id-12345",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "invalid-id-12345"]
+        },
+        "description": "Test case for non-existent contact ID - should return {\"message\": \"Not found\"} with status 404"
+      },
+      "response": []
+    }
+  ]
+}
