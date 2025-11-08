@@ -1,8 +1,10 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-
+import contactsService from "./services/contactsServices.js";
 import contactsRouter from "./routes/contactsRouter.js";
+
+await contactsService.seedContacts();
 
 const app = express();
 
