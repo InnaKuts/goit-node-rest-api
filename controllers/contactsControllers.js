@@ -35,8 +35,7 @@ export const createContact = async (req, res, next) => {
 
 export const updateContact = async (req, res, next) => {
   const { id } = req.params;
-  const { name, email, phone } = req.body;
-  const contact = await contactsService.updateContact(id, name, email, phone);
+  const contact = await contactsService.updateContact(id, req.body);
   if (!contact) {
     return next(HttpError(404));
   }

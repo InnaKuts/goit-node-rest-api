@@ -35,22 +35,18 @@ async function removeContact(contactId) {
 
 async function addContact(name, email, phone) {
   const contacts = await listContacts();
-  const existingContact = contacts.find((contact) => contact.email === email);
-  if (existingContact) {
-    return null;
-  }
   const newContact = { id: nanoid(21), name, email, phone };
   contacts.push(newContact);
   await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
   return newContact;
 }
 
-async function updateContact(contactId, name, email, phone) {
+async function updateContact(contactId, updateData) {
   const contacts = await listContacts();
   const index = contacts.findIndex((contact) => contact.id === contactId);
   if (index === -1) return null;
   const contact = contacts[index];
-  const updatedContact = { ...contact, name, email, phone };
+  const updatedContact = { ...contact, ...updateData };
   contacts[index] = updatedContact;
   await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
   return updatedContact;
