@@ -1,3 +1,15 @@
+-- Create contacts table
+CREATE TABLE IF NOT EXISTS contacts (
+  id VARCHAR(255) PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone VARCHAR(255) NOT NULL,
+  favorite BOOLEAN DEFAULT false,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insert seed data
 INSERT INTO contacts (id, name, email, phone, favorite, created_at, updated_at) VALUES
 ('AeHIrLTr6JkxGE6SN-0Rw','Allen Raymond','nulla.ante@vestibul.co.uk','(992) 914-3792', false, NOW(), NOW()),
 ('qdggE76Jtbfd9eWJHrssH','Chaim Lewis','dui.in@egetlacus.ca','(294) 840-6685', false, NOW(), NOW()),

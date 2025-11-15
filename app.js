@@ -1,8 +1,18 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import sequelize from "./db/sequelize.js";
 import contactsService from "./services/contactsServices.js";
 import contactsRouter from "./routes/contactsRouter.js";
+
+// Initialize database connection
+try {
+  await sequelize.authenticate();
+  console.log("Database connection successful");
+} catch (error) {
+  console.error("Unable to connect to the database:", error.message);
+  process.exit(1);
+}
 
 await contactsService.seedContacts();
 
