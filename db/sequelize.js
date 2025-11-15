@@ -11,6 +11,12 @@ const sequelize = new Sequelize({
   password: process.env.DB_PASSWORD,
   dialect: "postgres",
   logging: false,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
   define: {
     underscored: true,
     timestamps: true,

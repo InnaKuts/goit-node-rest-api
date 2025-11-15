@@ -3,7 +3,8 @@
   "type": "module",
   "scripts": {
     "start": "node ./app.js",
-    "dev": "nodemon ./app.js"
+    "dev": "nodemon ./app.js",
+    "init:env": "cp env.local .env"
   },
   "dependencies": {
     "cors": "^2.8.5",
