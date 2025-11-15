@@ -31,10 +31,18 @@ async function updateContact(contactId, updateData) {
   return contact;
 }
 
+async function updateStatusContact(contactId, body) {
+  const contact = await Contact.findByPk(contactId);
+  if (!contact) return null;
+  await contact.update(body);
+  return contact;
+}
+
 export default {
   listContacts,
   getContactById,
   removeContact,
   addContact,
   updateContact,
+  updateStatusContact,
 };
