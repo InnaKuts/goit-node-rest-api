@@ -16,12 +16,10 @@ async function removeContact(contactId) {
   return contact;
 }
 
-async function addContact(name, email, phone) {
+async function addContact(data) {
   const newContact = await Contact.create({
     id: nanoid(21),
-    name,
-    email,
-    phone,
+    ...data,
   });
   return newContact;
 }

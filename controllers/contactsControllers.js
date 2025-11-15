@@ -25,10 +25,9 @@ export const deleteContact = async (req, res, next) => {
 };
 
 export const createContact = async (req, res, next) => {
-  const { name, email, phone } = req.body;
-  const contact = await contactsService.addContact(name, email, phone);
+  const contact = await contactsService.addContact(req.body);
   if (!contact) {
-    return next(HttpError(409, `Contact with email '${email}' already exists`));
+    return next(HttpError(409, `Contact already exists`));
   }
   res.status(201).json(contact);
 };
