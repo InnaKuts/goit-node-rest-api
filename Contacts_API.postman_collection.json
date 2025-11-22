@@ -339,6 +339,113 @@
       "response": []
     },
     {
+      "name": "Update Subscription",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subscription\": \"pro\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/subscription",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "subscription"]
+        },
+        "description": "Updates user subscription. Returns 200 with email and subscription. Subscription must be one of: starter, pro, business. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Update Subscription (Unauthorized)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subscription\": \"pro\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/subscription",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "subscription"]
+        },
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Subscription (Invalid Value)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subscription\": \"premium\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/subscription",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "subscription"]
+        },
+        "description": "Test validation - invalid subscription value. Should return 400 with error message. Valid values are: starter, pro, business"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Subscription (Missing Field)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/subscription",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "subscription"]
+        },
+        "description": "Test validation - missing required subscription field. Should return 400 with error message"
+      },
+      "response": []
+    },
+    {
       "name": "Get All Contacts",
       "request": {
         "method": "GET",

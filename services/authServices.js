@@ -62,8 +62,22 @@ async function logout(userId) {
   return true;
 }
 
+async function updateSubscription(userId, subscription) {
+  const user = await User.findByPk(userId);
+  if (!user) {
+    return null;
+  }
+
+  await user.update({ subscription });
+  return {
+    email: user.email,
+    subscription: user.subscription,
+  };
+}
+
 export default {
   register,
   login,
   logout,
+  updateSubscription,
 };

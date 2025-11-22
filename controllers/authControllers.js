@@ -40,3 +40,15 @@ export const getCurrent = async (req, res, next) => {
 
   res.status(200).json({ email, subscription });
 };
+
+export const updateSubscription = async (req, res, next) => {
+  const { subscription } = req.body;
+
+  const user = await authService.updateSubscription(req.user.id, subscription);
+
+  if (!user) {
+    return next(HttpError(404, "User not found"));
+  }
+
+  res.status(200).json(user);
+};
