@@ -1,8 +1,21 @@
 import { nanoid } from "nanoid";
 import Contact from "../models/Contact.js";
 
-async function listContacts(userId) {
-  return await Contact.findAll({ where: { owner: userId } });
+async function listContacts(userId, page = 1, limit = 20) {
+  const offset = (page - 1) * limit;
+
+  const { count, rows } = await Contact.findAndCountAll({
+    where: { owner: userId },
+    limit,
+    offset,
+  });
+
+  return {
+    contacts: rows,
+    total: count,
+    page,
+    limit,
+  };
 }
 
 async function getContactById(contactId, userId) {

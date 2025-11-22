@@ -461,7 +461,67 @@
           "host": ["{{baseUrl}}"],
           "path": ["api", "contacts"]
         },
-        "description": "Returns all contacts with status 200. Requires authentication."
+        "description": "Returns all contacts with status 200. Supports pagination with default values (page=1, limit=20). Returns object with contacts array, total count, page, and limit. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Contacts (With Pagination)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts?page=1&limit=5",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        },
+        "description": "Returns paginated contacts. Returns object with contacts array, total count, page, and limit. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Contacts (Page 2)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts?page=2&limit=5",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"],
+          "query": [
+            {
+              "key": "page",
+              "value": "2"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        },
+        "description": "Returns second page of contacts with 5 items per page. Requires authentication."
       },
       "response": []
     },
