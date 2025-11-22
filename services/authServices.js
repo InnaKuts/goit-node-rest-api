@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 async function register(email, password) {
@@ -21,6 +22,37 @@ async function register(email, password) {
   };
 }
 
+async function login(email, password) {
+  const user = await User.findOne({ where: { email } });
+  if (!user) {
+    return null;
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    return null;
+  }
+
+  const token = jwt.sign(
+    { id: user.id, email: user.email },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "1h",
+    }
+  );
+
+  await user.update({ token });
+
+  return {
+    token,
+    user: {
+      email: user.email,
+      subscription: user.subscription,
+    },
+  };
+}
+
 export default {
   register,
+  login,
 };

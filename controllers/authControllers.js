@@ -12,3 +12,15 @@ export const register = async (req, res, next) => {
 
   res.status(201).json({ user });
 };
+
+export const login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const result = await authService.login(email, password);
+
+  if (!result) {
+    return next(HttpError(401, "Email or password is wrong"));
+  }
+
+  res.status(200).json(result);
+};
