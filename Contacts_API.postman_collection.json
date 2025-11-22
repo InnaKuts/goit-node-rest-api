@@ -9,6 +9,11 @@
       "key": "baseUrl",
       "value": "http://localhost:3000",
       "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
     }
   ],
   "item": [
@@ -269,18 +274,58 @@
       "name": "Get All Contacts",
       "request": {
         "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"]
+        },
+        "description": "Returns all contacts with status 200. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Contacts (Unauthorized)",
+      "request": {
+        "method": "GET",
         "header": [],
         "url": {
           "raw": "{{baseUrl}}/api/contacts",
           "host": ["{{baseUrl}}"],
           "path": ["api", "contacts"]
         },
-        "description": "Returns all contacts with status 200"
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
       },
       "response": []
     },
     {
       "name": "Get Contact By ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw"]
+        },
+        "description": "Returns contact object with status 200 if found, or {\"message\": \"Not found\"} with status 404 if not found. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Contact By ID (Unauthorized)",
       "request": {
         "method": "GET",
         "header": [],
@@ -289,7 +334,7 @@
           "host": ["{{baseUrl}}"],
           "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw"]
         },
-        "description": "Returns contact object with status 200 if found, or {\"message\": \"Not found\"} with status 404 if not found"
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
       },
       "response": []
     },
@@ -297,18 +342,52 @@
       "name": "Get Contact By ID (Not Found)",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
         "url": {
           "raw": "{{baseUrl}}/api/contacts/invalid-id-12345",
           "host": ["{{baseUrl}}"],
           "path": ["api", "contacts", "invalid-id-12345"]
         },
-        "description": "Test case for non-existent contact ID - should return 404"
+        "description": "Test case for non-existent contact ID - should return 404. Requires authentication."
       },
       "response": []
     },
     {
       "name": "Create Contact",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"(123) 456-7890\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"]
+        },
+        "description": "Creates a new contact with all required fields (name, email, phone). Returns created contact with status 201. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Contact (Unauthorized)",
       "request": {
         "method": "POST",
         "header": [
@@ -326,7 +405,7 @@
           "host": ["{{baseUrl}}"],
           "path": ["api", "contacts"]
         },
-        "description": "Creates a new contact with all required fields (name, email, phone). Returns created contact with status 201"
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
       },
       "response": []
     },
@@ -338,6 +417,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -361,6 +445,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -384,6 +473,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -407,6 +501,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -423,6 +522,29 @@
       "response": []
     },
     {
+      "name": "Update Contact (Unauthorized)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Name\",\n  \"phone\": \"(999) 888-7777\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw"]
+        },
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
+      },
+      "response": []
+    },
+    {
       "name": "Update Contact (Empty Body)",
       "request": {
         "method": "PUT",
@@ -430,6 +552,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -453,6 +580,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -476,6 +608,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -499,6 +636,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -522,6 +664,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -538,6 +685,29 @@
       "response": []
     },
     {
+      "name": "Update Favorite Status (Unauthorized)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"favorite\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw/favorite",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw", "favorite"]
+        },
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
+      },
+      "response": []
+    },
+    {
       "name": "Update Favorite Status (Not Found)",
       "request": {
         "method": "PATCH",
@@ -545,6 +715,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -568,6 +743,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -587,13 +767,33 @@
       "name": "Delete Contact",
       "request": {
         "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/C9sjBfCo4UJCWjzBnOtxl",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "C9sjBfCo4UJCWjzBnOtxl"]
+        },
+        "description": "Deletes contact by ID. Returns deleted contact object with status 200 if found, or {\"message\": \"Not found\"} with status 404 if not found. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Contact (Unauthorized)",
+      "request": {
+        "method": "DELETE",
         "header": [],
         "url": {
           "raw": "{{baseUrl}}/api/contacts/C9sjBfCo4UJCWjzBnOtxl",
           "host": ["{{baseUrl}}"],
           "path": ["api", "contacts", "C9sjBfCo4UJCWjzBnOtxl"]
         },
-        "description": "Deletes contact by ID. Returns deleted contact object with status 200 if found, or {\"message\": \"Not found\"} with status 404 if not found"
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
       },
       "response": []
     },
@@ -601,13 +801,19 @@
       "name": "Delete Contact (Not Found)",
       "request": {
         "method": "DELETE",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
         "url": {
           "raw": "{{baseUrl}}/api/contacts/invalid-id-12345",
           "host": ["{{baseUrl}}"],
           "path": ["api", "contacts", "invalid-id-12345"]
         },
-        "description": "Test case for non-existent contact ID - should return {\"message\": \"Not found\"} with status 404"
+        "description": "Test case for non-existent contact ID - should return {\"message\": \"Not found\"} with status 404. Requires authentication."
       },
       "response": []
     }
