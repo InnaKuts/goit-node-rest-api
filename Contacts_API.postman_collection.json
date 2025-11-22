@@ -271,6 +271,40 @@
       "response": []
     },
     {
+      "name": "Logout User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/logout",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "logout"]
+        },
+        "description": "Logs out the current user by clearing their token. Returns 204 No Content. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Logout User (Unauthorized)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/logout",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "logout"]
+        },
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
+      },
+      "response": []
+    },
+    {
       "name": "Get All Contacts",
       "request": {
         "method": "GET",
