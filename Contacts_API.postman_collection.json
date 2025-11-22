@@ -526,6 +526,92 @@
       "response": []
     },
     {
+      "name": "Get Favorite Contacts",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts?favorite=true",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"],
+          "query": [
+            {
+              "key": "favorite",
+              "value": "true"
+            }
+          ]
+        },
+        "description": "Returns only favorite contacts. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Non-Favorite Contacts",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts?favorite=false",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"],
+          "query": [
+            {
+              "key": "favorite",
+              "value": "false"
+            }
+          ]
+        },
+        "description": "Returns only non-favorite contacts. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Favorite Contacts (With Pagination)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts?favorite=true&page=1&limit=5",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"],
+          "query": [
+            {
+              "key": "favorite",
+              "value": "true"
+            },
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        },
+        "description": "Returns paginated favorite contacts. Combines filtering and pagination. Requires authentication."
+      },
+      "response": []
+    },
+    {
       "name": "Get All Contacts (Unauthorized)",
       "request": {
         "method": "GET",

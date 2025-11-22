@@ -5,7 +5,17 @@ export const getAllContacts = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 20;
 
-  const result = await contactsService.listContacts(req.user.id, page, limit);
+  let favorite = null;
+  if (req.query.favorite !== undefined) {
+    favorite = req.query.favorite === "true";
+  }
+
+  const result = await contactsService.listContacts(
+    req.user.id,
+    page,
+    limit,
+    favorite
+  );
   res.status(200).json(result);
 };
 
