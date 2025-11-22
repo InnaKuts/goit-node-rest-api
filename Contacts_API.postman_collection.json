@@ -305,6 +305,40 @@
       "response": []
     },
     {
+      "name": "Get Current User",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/current",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "current"]
+        },
+        "description": "Gets current user data by token. Returns 200 with email and subscription. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Current User (Unauthorized)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/current",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "current"]
+        },
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
+      },
+      "response": []
+    },
+    {
       "name": "Get All Contacts",
       "request": {
         "method": "GET",
