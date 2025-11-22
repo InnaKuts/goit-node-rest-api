@@ -384,9 +384,9 @@
           }
         ],
         "url": {
-          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw",
+          "raw": "{{baseUrl}}/api/contacts/c5QCqniU4cRBioy4P6xLC",
           "host": ["{{baseUrl}}"],
-          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw"]
+          "path": ["api", "contacts", "c5QCqniU4cRBioy4P6xLC"]
         },
         "description": "Returns contact object with status 200 if found, or {\"message\": \"Not found\"} with status 404 if not found. Requires authentication."
       },
@@ -398,9 +398,9 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw",
+          "raw": "{{baseUrl}}/api/contacts/c5QCqniU4cRBioy4P6xLC",
           "host": ["{{baseUrl}}"],
-          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw"]
+          "path": ["api", "contacts", "c5QCqniU4cRBioy4P6xLC"]
         },
         "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
       },
