@@ -24,3 +24,13 @@ export const login = async (req, res, next) => {
 
   res.status(200).json(result);
 };
+
+export const logout = async (req, res, next) => {
+  const result = await authService.logout(req.user.id);
+
+  if (!result) {
+    return next(HttpError(401, "Not authorized"));
+  }
+
+  res.status(204).send();
+};

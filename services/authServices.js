@@ -52,7 +52,18 @@ async function login(email, password) {
   };
 }
 
+async function logout(userId) {
+  const user = await User.findByPk(userId);
+  if (!user) {
+    return null;
+  }
+
+  await user.update({ token: null });
+  return true;
+}
+
 export default {
   register,
   login,
+  logout,
 };
