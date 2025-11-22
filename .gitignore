@@ -3,4 +3,6 @@ node_modules/
 .idea
 .vscode
 .DS_Store
-db/
+.db/
+.local_db/
+db/contacts.json

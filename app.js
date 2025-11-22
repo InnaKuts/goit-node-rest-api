@@ -1,10 +1,17 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import contactsService from "./services/contactsServices.js";
+import sequelize from "./db/sequelize.js";
 import contactsRouter from "./routes/contactsRouter.js";
 
-await contactsService.seedContacts();
+// Initialize database connection
+try {
+  await sequelize.authenticate();
+  console.log("Database connection successful");
+} catch (error) {
+  console.error("Unable to connect to the database:", error.message);
+  process.exit(1);
+}
 
 const app = express();
 

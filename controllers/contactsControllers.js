@@ -25,10 +25,9 @@ export const deleteContact = async (req, res, next) => {
 };
 
 export const createContact = async (req, res, next) => {
-  const { name, email, phone } = req.body;
-  const contact = await contactsService.addContact(name, email, phone);
+  const contact = await contactsService.addContact(req.body);
   if (!contact) {
-    return next(HttpError(409, `Contact with email '${email}' already exists`));
+    return next(HttpError(409, `Contact already exists`));
   }
   res.status(201).json(contact);
 };
@@ -38,6 +37,18 @@ export const updateContact = async (req, res, next) => {
   const contact = await contactsService.updateContact(id, req.body);
   if (!contact) {
     return next(HttpError(404));
+  }
+  res.status(200).json(contact);
+};
+
+export const updateStatusContact = async (req, res, next) => {
+  const { contactId } = req.params;
+  const contact = await contactsService.updateStatusContact(
+    contactId,
+    req.body
+  );
+  if (!contact) {
+    return next(HttpError(404, "Not found"));
   }
   res.status(200).json(contact);
 };

@@ -124,6 +124,29 @@
       "response": []
     },
     {
+      "name": "Create Contact with Favorite",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Jane Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"phone\": \"(555) 123-4567\",\n  \"favorite\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"]
+        },
+        "description": "Creates a new contact with favorite field set to true. Returns created contact with status 201"
+      },
+      "response": []
+    },
+    {
       "name": "Update Contact",
       "request": {
         "method": "PUT",
@@ -212,6 +235,98 @@
           "path": ["api", "contacts", "invalid-id-12345"]
         },
         "description": "Test case for non-existent contact ID - should return {\"message\": \"Not found\"} with status 404"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Contact with Favorite",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Name\",\n  \"favorite\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw"]
+        },
+        "description": "Updates contact including the favorite field. Returns updated contact with status 200"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Favorite Status",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"favorite\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw/favorite",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw", "favorite"]
+        },
+        "description": "Updates only the favorite status of a contact. Returns updated contact with status 200"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Favorite Status (Not Found)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"favorite\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/invalid-id-12345/favorite",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "invalid-id-12345", "favorite"]
+        },
+        "description": "Test case for non-existent contact ID - should return {\"message\": \"Not found\"} with status 404"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Favorite Status (Missing Field)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw/favorite",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw", "favorite"]
+        },
+        "description": "Test validation - missing required 'favorite' field. Should return {\"message\": error.message} with status 400"
       },
       "response": []
     },
