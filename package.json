@@ -4,7 +4,9 @@
   "scripts": {
     "start": "node ./app.js",
     "dev": "nodemon ./app.js",
-    "init:env": "cp env.local .env"
+    "init:env": "cp env.local .env",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:watch": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watch"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -23,6 +25,9 @@
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
+    "@jest/globals": "^30.2.0",
+    "cross-env": "^10.1.0",
+    "jest": "^30.2.0",
     "nodemon": "^3.0.2"
   }
 }
