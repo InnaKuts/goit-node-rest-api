@@ -9,11 +9,610 @@
       "key": "baseUrl",
       "value": "http://localhost:3000",
       "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
     }
   ],
   "item": [
     {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/register",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "register"]
+        },
+        "description": "Registers a new user with email and password. Returns 201 with user object (email and subscription)"
+      },
+      "response": []
+    },
+    {
+      "name": "Register User (Missing Password)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/register",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "register"]
+        },
+        "description": "Test validation - missing password field. Should return 400 with error message"
+      },
+      "response": []
+    },
+    {
+      "name": "Register User (Invalid Email)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"invalid-email\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/register",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "register"]
+        },
+        "description": "Test validation - invalid email format. Should return 400 with error message"
+      },
+      "response": []
+    },
+    {
+      "name": "Register User (Email In Use)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/register",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "register"]
+        },
+        "description": "Test conflict - email already exists. Should return 409 with message 'Email in use'"
+      },
+      "response": []
+    },
+    {
+      "name": "Register User (Short Password)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"newuser@example.com\",\n  \"password\": \"123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/register",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "register"]
+        },
+        "description": "Test validation - password too short (less than 6 characters). Should return 400 with error message"
+      },
+      "response": []
+    },
+    {
+      "name": "Login User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        },
+        "description": "Logs in an existing user. Returns 200 with token and user object (email and subscription)"
+      },
+      "response": []
+    },
+    {
+      "name": "Login User (Missing Password)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        },
+        "description": "Test validation - missing password field. Should return 400 with error message"
+      },
+      "response": []
+    },
+    {
+      "name": "Login User (Missing Email)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        },
+        "description": "Test validation - missing email field. Should return 400 with error message"
+      },
+      "response": []
+    },
+    {
+      "name": "Login User (Invalid Email)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"invalid-email\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        },
+        "description": "Test validation - invalid email format. Should return 400 with error message"
+      },
+      "response": []
+    },
+    {
+      "name": "Login User (Wrong Password)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"wrongpassword\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        },
+        "description": "Test authentication - wrong password. Should return 401 with message 'Email or password is wrong'"
+      },
+      "response": []
+    },
+    {
+      "name": "Login User (User Not Found)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"nonexistent@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "login"]
+        },
+        "description": "Test authentication - user doesn't exist. Should return 401 with message 'Email or password is wrong'"
+      },
+      "response": []
+    },
+    {
+      "name": "Logout User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/logout",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "logout"]
+        },
+        "description": "Logs out the current user by clearing their token. Returns 204 No Content. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Logout User (Unauthorized)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/logout",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "logout"]
+        },
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Current User",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/current",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "current"]
+        },
+        "description": "Gets current user data by token. Returns 200 with email and subscription. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Current User (Unauthorized)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/current",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "current"]
+        },
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Subscription",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subscription\": \"pro\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/subscription",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "subscription"]
+        },
+        "description": "Updates user subscription. Returns 200 with email and subscription. Subscription must be one of: starter, pro, business. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Update Subscription (Unauthorized)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subscription\": \"pro\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/subscription",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "subscription"]
+        },
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Subscription (Invalid Value)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"subscription\": \"premium\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/subscription",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "subscription"]
+        },
+        "description": "Test validation - invalid subscription value. Should return 400 with error message. Valid values are: starter, pro, business"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Subscription (Missing Field)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/subscription",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "subscription"]
+        },
+        "description": "Test validation - missing required subscription field. Should return 400 with error message"
+      },
+      "response": []
+    },
+    {
       "name": "Get All Contacts",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"]
+        },
+        "description": "Returns all contacts with status 200. Supports pagination with default values (page=1, limit=20). Returns object with contacts array, total count, page, and limit. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Contacts (With Pagination)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts?page=1&limit=5",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        },
+        "description": "Returns paginated contacts. Returns object with contacts array, total count, page, and limit. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Contacts (Page 2)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts?page=2&limit=5",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"],
+          "query": [
+            {
+              "key": "page",
+              "value": "2"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        },
+        "description": "Returns second page of contacts with 5 items per page. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Favorite Contacts",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts?favorite=true",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"],
+          "query": [
+            {
+              "key": "favorite",
+              "value": "true"
+            }
+          ]
+        },
+        "description": "Returns only favorite contacts. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Non-Favorite Contacts",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts?favorite=false",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"],
+          "query": [
+            {
+              "key": "favorite",
+              "value": "false"
+            }
+          ]
+        },
+        "description": "Returns only non-favorite contacts. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Favorite Contacts (With Pagination)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts?favorite=true&page=1&limit=5",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"],
+          "query": [
+            {
+              "key": "favorite",
+              "value": "true"
+            },
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            }
+          ]
+        },
+        "description": "Returns paginated favorite contacts. Combines filtering and pagination. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Contacts (Unauthorized)",
       "request": {
         "method": "GET",
         "header": [],
@@ -22,7 +621,7 @@
           "host": ["{{baseUrl}}"],
           "path": ["api", "contacts"]
         },
-        "description": "Returns all contacts with status 200"
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
       },
       "response": []
     },
@@ -30,13 +629,33 @@
       "name": "Get Contact By ID",
       "request": {
         "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/c5QCqniU4cRBioy4P6xLC",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "c5QCqniU4cRBioy4P6xLC"]
+        },
+        "description": "Returns contact object with status 200 if found, or {\"message\": \"Not found\"} with status 404 if not found. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Contact By ID (Unauthorized)",
+      "request": {
+        "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw",
+          "raw": "{{baseUrl}}/api/contacts/c5QCqniU4cRBioy4P6xLC",
           "host": ["{{baseUrl}}"],
-          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw"]
+          "path": ["api", "contacts", "c5QCqniU4cRBioy4P6xLC"]
         },
-        "description": "Returns contact object with status 200 if found, or {\"message\": \"Not found\"} with status 404 if not found"
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
       },
       "response": []
     },
@@ -44,18 +663,52 @@
       "name": "Get Contact By ID (Not Found)",
       "request": {
         "method": "GET",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
         "url": {
           "raw": "{{baseUrl}}/api/contacts/invalid-id-12345",
           "host": ["{{baseUrl}}"],
           "path": ["api", "contacts", "invalid-id-12345"]
         },
-        "description": "Test case for non-existent contact ID - should return 404"
+        "description": "Test case for non-existent contact ID - should return 404. Requires authentication."
       },
       "response": []
     },
     {
       "name": "Create Contact",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"(123) 456-7890\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts"]
+        },
+        "description": "Creates a new contact with all required fields (name, email, phone). Returns created contact with status 201. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Contact (Unauthorized)",
       "request": {
         "method": "POST",
         "header": [
@@ -73,7 +726,7 @@
           "host": ["{{baseUrl}}"],
           "path": ["api", "contacts"]
         },
-        "description": "Creates a new contact with all required fields (name, email, phone). Returns created contact with status 201"
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
       },
       "response": []
     },
@@ -85,6 +738,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -108,6 +766,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -131,6 +794,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -154,6 +822,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -170,6 +843,29 @@
       "response": []
     },
     {
+      "name": "Update Contact (Unauthorized)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Name\",\n  \"phone\": \"(999) 888-7777\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw"]
+        },
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
+      },
+      "response": []
+    },
+    {
       "name": "Update Contact (Empty Body)",
       "request": {
         "method": "PUT",
@@ -177,6 +873,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -200,6 +901,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -223,6 +929,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -246,6 +957,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -269,6 +985,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -285,6 +1006,29 @@
       "response": []
     },
     {
+      "name": "Update Favorite Status (Unauthorized)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"favorite\": true\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/AeHIrLTr6JkxGE6SN-0Rw/favorite",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "AeHIrLTr6JkxGE6SN-0Rw", "favorite"]
+        },
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
+      },
+      "response": []
+    },
+    {
       "name": "Update Favorite Status (Not Found)",
       "request": {
         "method": "PATCH",
@@ -292,6 +1036,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -315,6 +1064,11 @@
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
           }
         ],
         "body": {
@@ -334,13 +1088,33 @@
       "name": "Delete Contact",
       "request": {
         "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/contacts/C9sjBfCo4UJCWjzBnOtxl",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "contacts", "C9sjBfCo4UJCWjzBnOtxl"]
+        },
+        "description": "Deletes contact by ID. Returns deleted contact object with status 200 if found, or {\"message\": \"Not found\"} with status 404 if not found. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Contact (Unauthorized)",
+      "request": {
+        "method": "DELETE",
         "header": [],
         "url": {
           "raw": "{{baseUrl}}/api/contacts/C9sjBfCo4UJCWjzBnOtxl",
           "host": ["{{baseUrl}}"],
           "path": ["api", "contacts", "C9sjBfCo4UJCWjzBnOtxl"]
         },
-        "description": "Deletes contact by ID. Returns deleted contact object with status 200 if found, or {\"message\": \"Not found\"} with status 404 if not found"
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
       },
       "response": []
     },
@@ -348,13 +1122,19 @@
       "name": "Delete Contact (Not Found)",
       "request": {
         "method": "DELETE",
-        "header": [],
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
         "url": {
           "raw": "{{baseUrl}}/api/contacts/invalid-id-12345",
           "host": ["{{baseUrl}}"],
           "path": ["api", "contacts", "invalid-id-12345"]
         },
-        "description": "Test case for non-existent contact ID - should return {\"message\": \"Not found\"} with status 404"
+        "description": "Test case for non-existent contact ID - should return {\"message\": \"Not found\"} with status 404. Requires authentication."
       },
       "response": []
     }
