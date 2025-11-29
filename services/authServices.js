@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import gravatar from "gravatar";
 import User from "../models/User.js";
 
 async function register(email, password) {
@@ -9,16 +10,19 @@ async function register(email, password) {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
+  const avatarURL = gravatar.url(email, { s: "250", d: "retro" }, true);
 
   const newUser = await User.create({
     email,
     password: hashedPassword,
     subscription: "starter",
+    avatarURL,
   });
 
   return {
     email: newUser.email,
     subscription: newUser.subscription,
+    avatarURL: newUser.avatarURL,
   };
 }
 
@@ -48,6 +52,7 @@ async function login(email, password) {
     user: {
       email: user.email,
       subscription: user.subscription,
+      avatarURL: user.avatarURL,
     },
   };
 }
