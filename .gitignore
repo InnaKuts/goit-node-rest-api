@@ -7,5 +7,4 @@ node_modules/
 .local_db/
 db/contacts.json
 temp/*
-public/avatars/*
 !.gitkeep
