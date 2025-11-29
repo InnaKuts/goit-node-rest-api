@@ -52,3 +52,17 @@ export const updateSubscription = async (req, res, next) => {
 
   res.status(200).json(user);
 };
+
+export const updateAvatar = async (req, res, next) => {
+  if (!req.file) {
+    return next(HttpError(400, "No file uploaded"));
+  }
+
+  const result = await authService.updateAvatar(req.user.id, req.file);
+
+  if (!result) {
+    return next(HttpError(404, "User not found"));
+  }
+
+  res.status(200).json(result);
+};

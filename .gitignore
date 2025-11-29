@@ -6,3 +6,6 @@ node_modules/
 .db/
 .local_db/
 db/contacts.json
+temp/*
+public/avatars/*
+!.gitkeep
