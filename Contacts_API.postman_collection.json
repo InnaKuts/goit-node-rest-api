@@ -339,6 +339,84 @@
       "response": []
     },
     {
+      "name": "Update Avatar",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "avatar",
+              "type": "file",
+              "src": []
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/avatars",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "avatars"]
+        },
+        "description": "Updates user avatar. Upload an image file (JPEG, PNG, GIF). Returns 200 with avatarURL. File size limit: 5MB. Requires authentication."
+      },
+      "response": []
+    },
+    {
+      "name": "Update Avatar (Unauthorized)",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "avatar",
+              "type": "file",
+              "src": []
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/avatars",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "avatars"]
+        },
+        "description": "Test authentication - no token provided. Should return 401 with message 'Not authorized'"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Avatar (No File)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": []
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/avatars",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "avatars"]
+        },
+        "description": "Test validation - no file uploaded. Should return 400 with message 'No file uploaded'"
+      },
+      "response": []
+    },
+    {
       "name": "Update Subscription",
       "request": {
         "method": "PATCH",
