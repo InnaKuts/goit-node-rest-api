@@ -83,6 +83,16 @@ async function updateSubscription(userId, subscription) {
   };
 }
 
+async function verifyEmail(verificationToken) {
+  const user = await User.findOne({ where: { verificationToken } });
+  if (!user) {
+    return null;
+  }
+
+  await user.update({ verificationToken: null, verify: true });
+  return true;
+}
+
 async function updateAvatar(userId, file) {
   const user = await User.findByPk(userId);
   if (!user) {
@@ -121,5 +131,6 @@ export default {
   login,
   logout,
   updateSubscription,
+  verifyEmail,
   updateAvatar,
 };

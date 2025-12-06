@@ -5,6 +5,7 @@ import {
   logout,
   getCurrent,
   updateSubscription,
+  verifyEmail,
   updateAvatar,
 } from "../controllers/authControllers.js";
 import validateBody from "../helpers/validateBody.js";
@@ -26,6 +27,8 @@ authRouter.post(
 );
 
 authRouter.post("/login", validateBody(loginSchema), ctrlWrapper(login));
+
+authRouter.get("/verify/:verificationToken", ctrlWrapper(verifyEmail));
 
 authRouter.get("/current", authenticate, ctrlWrapper(getCurrent));
 

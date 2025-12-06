@@ -53,6 +53,18 @@ export const updateSubscription = async (req, res, next) => {
   res.status(200).json(user);
 };
 
+export const verifyEmail = async (req, res, next) => {
+  const { verificationToken } = req.params;
+
+  const result = await authService.verifyEmail(verificationToken);
+
+  if (!result) {
+    return next(HttpError(404, "User not found"));
+  }
+
+  res.status(200).json({ message: "Verification successful" });
+};
+
 export const updateAvatar = async (req, res, next) => {
   if (!req.file) {
     return next(HttpError(400, "No file uploaded"));

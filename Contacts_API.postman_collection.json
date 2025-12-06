@@ -133,6 +133,40 @@
       "response": []
     },
     {
+      "name": "Verify Email",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/verify/:verificationToken",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "verify", ":verificationToken"],
+          "variable": [
+            {
+              "key": "verificationToken",
+              "value": "your-verification-token-here"
+            }
+          ]
+        },
+        "description": "Verifies user email using verification token. Returns 200 with message 'Verification successful'. Token is sent to user's email after registration."
+      },
+      "response": []
+    },
+    {
+      "name": "Verify Email (User Not Found)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/verify/invalid-token-12345",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "verify", "invalid-token-12345"]
+        },
+        "description": "Test case for invalid or already used verification token. Should return 404 with message 'User not found'"
+      },
+      "response": []
+    },
+    {
       "name": "Login User",
       "request": {
         "method": "POST",
