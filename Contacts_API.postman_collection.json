@@ -167,6 +167,98 @@
       "response": []
     },
     {
+      "name": "Resend Verification Email",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/verify",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "verify"]
+        },
+        "description": "Resends verification email to user. Returns 200 with message 'Verification email sent'"
+      },
+      "response": []
+    },
+    {
+      "name": "Resend Verification Email (Missing Email)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/verify",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "verify"]
+        },
+        "description": "Test validation - missing email field. Should return 400 with message 'missing required field email'"
+      },
+      "response": []
+    },
+    {
+      "name": "Resend Verification Email (Already Verified)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"verified@example.com\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/verify",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "verify"]
+        },
+        "description": "Test case for already verified user. Should return 400 with message 'Verification has already been passed'"
+      },
+      "response": []
+    },
+    {
+      "name": "Resend Verification Email (User Not Found)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"nonexistent@example.com\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/verify",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "auth", "verify"]
+        },
+        "description": "Test case for non-existent user. Should return 404 with message 'User not found'"
+      },
+      "response": []
+    },
+    {
       "name": "Login User",
       "request": {
         "method": "POST",

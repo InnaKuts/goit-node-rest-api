@@ -113,6 +113,20 @@ async function verifyEmail(verificationToken) {
   return true;
 }
 
+async function resendVerifyEmail(email) {
+  const user = await User.findOne({ where: { email } });
+  if (!user) {
+    return null;
+  }
+
+  if (user.verify) {
+    return { alreadyVerified: true };
+  }
+
+  await sendVerificationEmail(email, user.verificationToken);
+  return true;
+}
+
 async function updateAvatar(userId, file) {
   const user = await User.findByPk(userId);
   if (!user) {
@@ -152,5 +166,6 @@ export default {
   logout,
   updateSubscription,
   verifyEmail,
+  resendVerifyEmail,
   updateAvatar,
 };
