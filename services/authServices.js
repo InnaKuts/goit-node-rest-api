@@ -5,6 +5,18 @@ import fs from "fs/promises";
 import path from "path";
 import { nanoid } from "nanoid";
 import User from "../models/User.js";
+import { sendEmail } from "./mailService.js";
+
+const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
+
+async function sendVerificationEmail(email, verificationToken) {
+  const verificationLink = `${BASE_URL}/api/auth/verify/${verificationToken}`;
+  await sendEmail(
+    email,
+    "Email Verification",
+    `Please verify your email by clicking on this link: ${verificationLink}`
+  );
+}
 
 async function register(email, password) {
   const existingUser = await User.findOne({ where: { email } });
@@ -14,13 +26,17 @@ async function register(email, password) {
 
   const hashedPassword = await bcrypt.hash(password, 10);
   const avatarURL = gravatar.url(email, { s: "250", d: "retro" }, true);
+  const verificationToken = nanoid();
 
   const newUser = await User.create({
     email,
     password: hashedPassword,
     subscription: "starter",
     avatarURL,
+    verificationToken,
   });
+
+  await sendVerificationEmail(email, verificationToken);
 
   return {
     email: newUser.email,
@@ -33,6 +49,10 @@ async function login(email, password) {
   const user = await User.findOne({ where: { email } });
   if (!user) {
     return null;
+  }
+
+  if (!user.verify) {
+    return { notVerified: true };
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);

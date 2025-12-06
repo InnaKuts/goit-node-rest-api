@@ -22,6 +22,10 @@ export const login = async (req, res, next) => {
     return next(HttpError(401, "Email or password is wrong"));
   }
 
+  if (result.notVerified) {
+    return next(HttpError(401, "Email not verified"));
+  }
+
   res.status(200).json(result);
 };
 
