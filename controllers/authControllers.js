@@ -22,6 +22,10 @@ export const login = async (req, res, next) => {
     return next(HttpError(401, "Email or password is wrong"));
   }
 
+  if (result.notVerified) {
+    return next(HttpError(401, "Email not verified"));
+  }
+
   res.status(200).json(result);
 };
 
@@ -51,6 +55,34 @@ export const updateSubscription = async (req, res, next) => {
   }
 
   res.status(200).json(user);
+};
+
+export const verifyEmail = async (req, res, next) => {
+  const { verificationToken } = req.params;
+
+  const result = await authService.verifyEmail(verificationToken);
+
+  if (!result) {
+    return next(HttpError(404, "User not found"));
+  }
+
+  res.status(200).json({ message: "Verification successful" });
+};
+
+export const resendVerifyEmail = async (req, res, next) => {
+  const { email } = req.body;
+
+  const result = await authService.resendVerifyEmail(email);
+
+  if (!result) {
+    return next(HttpError(404, "User not found"));
+  }
+
+  if (result.alreadyVerified) {
+    return next(HttpError(400, "Verification has already been passed"));
+  }
+
+  res.status(200).json({ message: "Verification email sent" });
 };
 
 export const updateAvatar = async (req, res, next) => {

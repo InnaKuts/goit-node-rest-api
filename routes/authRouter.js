@@ -5,6 +5,8 @@ import {
   logout,
   getCurrent,
   updateSubscription,
+  verifyEmail,
+  resendVerifyEmail,
   updateAvatar,
 } from "../controllers/authControllers.js";
 import validateBody from "../helpers/validateBody.js";
@@ -12,6 +14,7 @@ import {
   registerSchema,
   loginSchema,
   updateSubscriptionSchema,
+  emailSchema,
 } from "../schemas/authSchemas.js";
 import ctrlWrapper from "../helpers/ctrlWrapper.js";
 import authenticate from "../middlewares/authenticate.js";
@@ -26,6 +29,14 @@ authRouter.post(
 );
 
 authRouter.post("/login", validateBody(loginSchema), ctrlWrapper(login));
+
+authRouter.get("/verify/:verificationToken", ctrlWrapper(verifyEmail));
+
+authRouter.post(
+  "/verify",
+  validateBody(emailSchema),
+  ctrlWrapper(resendVerifyEmail)
+);
 
 authRouter.get("/current", authenticate, ctrlWrapper(getCurrent));
 
